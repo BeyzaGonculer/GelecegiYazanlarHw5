@@ -1,6 +1,7 @@
 package com.example.hw_5.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity()
@@ -32,8 +33,9 @@ public class Book {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @OneToOne
-    @JoinColumn(name = "borrow_id", nullable = false)
+    // Book sadece Borrow tarafından sahiplenilir
+    @JsonIgnore
+    @OneToOne(mappedBy = "book")
     private Borrow borrow;
 
     public Borrow getBorrow() {

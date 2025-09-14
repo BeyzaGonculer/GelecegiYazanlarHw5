@@ -1,5 +1,6 @@
 package com.example.hw_5.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -29,6 +30,7 @@ public class Author {
 
 
  // **************************************
+    @JsonIgnore
     @OneToMany(mappedBy = "author")
     private List<Book> books;
 

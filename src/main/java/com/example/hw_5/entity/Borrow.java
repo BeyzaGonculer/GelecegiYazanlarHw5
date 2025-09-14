@@ -24,9 +24,18 @@ public class Borrow {
     @Column(name="delivery_date")
     private Date deliveryDate;
 
+    // Borrow tarafı sahipli (owning side)
     @OneToOne
-    @JoinColumn(name = "book_id", nullable = false)
+    @JoinColumn(name = "book_id", referencedColumnName = "book_id", nullable = false)
     private Book book;
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
 
     @ManyToOne
     @JoinColumn(name = "personel_id", nullable = false)
@@ -68,13 +77,7 @@ public class Borrow {
         this.deliveryDate = deliveryDate;
     }
 
-    public Book getBook() {
-        return book;
-    }
 
-    public void setBook(Book book) {
-        this.book = book;
-    }
 
     public Personel getPersonel() {
         return personel;

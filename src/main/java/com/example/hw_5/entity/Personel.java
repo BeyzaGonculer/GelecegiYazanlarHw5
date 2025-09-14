@@ -1,5 +1,6 @@
 package com.example.hw_5.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class Personel {
     @Column(name="phone_number")
     private String phoneNumber;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "personel")
     private List<Borrow> borrows;
 
