@@ -1,6 +1,7 @@
 package com.example.hw_5.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -44,6 +45,20 @@ public class Borrow {
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "borrow")
+    private Fine fine;
+
+
+
+    public Fine getFine() {
+        return fine;
+    }
+
+    public void setFine(Fine fine) {
+        this.fine = fine;
+    }
 
     public int getBorrowId() {
         return borrowId;

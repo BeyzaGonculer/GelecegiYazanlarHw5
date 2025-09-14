@@ -4,6 +4,8 @@ package com.example.hw_5.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity()
 public class Book {
 
@@ -21,6 +23,17 @@ public class Book {
     @Column(name="isbn_number")
     private String isbnNumber;
 
+    @Column(name="status")
+    private String status;
+
+    @Column(name="total_copies")
+    private int totalCopies;
+
+    @Column(name="available_copies")
+    private int availableCopies;
+
+
+
     @ManyToOne() //FK  hangi tabloda ise Ona ManyToOne diğerine OneToMany
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;
@@ -37,6 +50,43 @@ public class Book {
     @JsonIgnore
     @OneToOne(mappedBy = "book")
     private Borrow borrow;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "book")
+    private List<Reservation> reservation;
+
+
+    public List<Reservation> getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(List<Reservation> reservation) {
+        this.reservation = reservation;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getTotalCopies() {
+        return totalCopies;
+    }
+
+    public void setTotalCopies(int totalCopies) {
+        this.totalCopies = totalCopies;
+    }
+
+    public int getAvailableCopies() {
+        return availableCopies;
+    }
+
+    public void setAvailableCopies(int availableCopies) {
+        this.availableCopies = availableCopies;
+    }
 
     public Borrow getBorrow() {
         return borrow;

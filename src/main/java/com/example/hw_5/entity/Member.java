@@ -27,9 +27,56 @@ public class Member {
     @Column(name="phone_number")
     private String phoneNumber;
 
+    @Column(name="membership_level")
+    private String membershipLevel;
+
+    @Column(name="is_banned")
+    private boolean isBanned;
+
+    @Column(name="is_paid")
+    private boolean isPaid;
+
     @JsonIgnore
     @OneToMany(mappedBy = "member")
     private List<Borrow> borrows;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "member")
+    private List<Reservation> reservations;
+
+
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+    public String getMembershipLevel() {
+        return membershipLevel;
+    }
+
+    public void setMembershipLevel(String membershipLevel) {
+        this.membershipLevel = membershipLevel;
+    }
+
+    public boolean isBanned() {
+        return isBanned;
+    }
+
+    public void setBanned(boolean banned) {
+        isBanned = banned;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
+    }
 
     public int getMemberId() {
         return memberId;
