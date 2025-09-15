@@ -32,8 +32,6 @@ public class Book {
     @Column(name="available_copies")
     private int availableCopies;
 
-
-
     @ManyToOne() //FK  hangi tabloda ise Ona ManyToOne diğerine OneToMany
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;

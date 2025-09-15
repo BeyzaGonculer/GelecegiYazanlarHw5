@@ -1,6 +1,5 @@
 package com.example.hw_5.controller;
 
-import com.example.hw_5.dto.BookForAddDto;
 import com.example.hw_5.dto.book.request.CreateBookRequest;
 import com.example.hw_5.dto.book.request.SearchBookRequest;
 import com.example.hw_5.dto.book.request.UpdateBookRequest;
@@ -17,14 +16,9 @@ import java.util.List;
 @RequestMapping("/api/v1/books") // localhost:port/api/v1/products ile başlıyorsa istek buraya gelsin.
 
 public class BookController {
-    private BookService bookService;
+    private final BookService bookService;
     public BookController(BookService bookService) {
         this.bookService = bookService;
-    }
-
-    @GetMapping()
-    public List<GetAllBookResponse> getAll() {
-        return bookService.getAll();
     }
 
     // Ekleme endpointleri ekleme sonrası durum için eklenen entity'i geri döner.
@@ -34,6 +28,13 @@ public class BookController {
     {
         return bookService.add(request);
     }
+
+
+    @GetMapping()
+    public List<GetAllBookResponse> getAll() {
+        return bookService.getAll();
+    }
+
 
     @GetMapping("{id}")
     public GetBookByIdResponse getById(@PathVariable int id){

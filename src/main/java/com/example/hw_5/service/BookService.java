@@ -8,6 +8,7 @@ import com.example.hw_5.entity.*;
 import com.example.hw_5.mapper.BookMapper;
 import com.example.hw_5.repository.BookRepository;
 import com.example.hw_5.repository.CategoryRepository;
+import com.example.hw_5.rules.BookBusinessRules;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -29,13 +30,15 @@ public class BookService {
 
     private final PublisherService publisherService;
 
+    private final BookBusinessRules bookBusinessRules;
 
 
-    public BookService(BookRepository bookRepository, CategoryService categoryService, AuthorService authorService, PublisherService publisherService) {
+    public BookService(BookRepository bookRepository, CategoryService categoryService, AuthorService authorService, PublisherService publisherService, BookBusinessRules bookBusinessRules) {
         this.bookRepository = bookRepository;
         this.categoryService = categoryService;
         this.authorService = authorService;
         this.publisherService = publisherService;
+        this.bookBusinessRules=bookBusinessRules;
     }
 
     public List<GetAllBookResponse> getAll(){
@@ -113,16 +116,19 @@ public class BookService {
 
     public CreatedBookResponse add(@Valid CreateBookRequest createBookRequest)
     {
+        //Book iş kuralları
+        bookBusinessRules.inactiveBookCannotBarrowOrMakeReservation(createBookRequest.getStatus());
+        bookBusinessRules.availableCopiesCannotBiggerThanTotalCopies(createBookRequest.getAvailableCopies(), createBookRequest.getTotalCopies());
+        bookBusinessRules.isbnMustBeUniqueAndTotalCopiesMustBePositive(createBookRequest.getIsbnNumber(), createBookRequest.getTotalCopies());
+
+
         BookMapper bookMapper = BookMapper.INSTANCE;
         // Mapping
-
         Book book = bookMapper.createBookRequestToBook(createBookRequest);
       /*  Book book = new Book();
         book.setName(createBookRequest.getName());
         book.setIsbnNumber(createBookRequest.getIsbnNumber());
         book.setPageCount(createBookRequest.getPageCount());
-
-
 
         Author author = authorService
                 .findAuthorById(createBookRequest.getAuthorId()).orElseThrow(()-> new NotFoundException("Bu id ile bir yazar bulunamadı"));

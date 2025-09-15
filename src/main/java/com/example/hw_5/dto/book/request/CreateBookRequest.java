@@ -4,25 +4,60 @@ import jakarta.validation.constraints.*;
 
 public class CreateBookRequest {
 
-    @NotNull
-    private int authorId;
-
-    @NotNull
-    private int categoryId;
-
-    @Positive
-    private int pageCount;
-
-    @NotNull
-    private int publisherId;
-
-    @NotBlank
-    @Size(min=2)
-    private String isbnNumber;
-
-    @Size(min=2)
+    @NotBlank(message = "Book name cannot be blank")
+    @Size(min=2,max = 255)
     private String name;
 
+    @Positive(message = "Page count must be positive")
+    private int pageCount;
+
+    @NotBlank(message = "ISBN cannot be blank")
+    @Size(min = 8, max = 8, message = "ISBN must be exactly 8 characters")
+    private String isbnNumber;
+
+    @NotBlank(message = "Status is required (ACTIVE or INACTIVE)")
+    private String status;
+
+    @Min(value = 0, message = "Total copies must be 0 or greater")
+    private int totalCopies;
+
+    @Min(value = 0, message = "Available copies must be 0 or greater")
+    private int availableCopies;
+
+    @NotNull(message = "Author id is required")
+    private int authorId;
+
+    @NotNull(message = "Category id is required")
+    private int categoryId;
+
+    @NotNull(message = "Publisher  id is required")
+    private int publisherId;
+
+    // GETTERS AND SETTERS
+
+    public int getTotalCopies() {
+        return totalCopies;
+    }
+
+    public void setTotalCopies(int totalCopies) {
+        this.totalCopies = totalCopies;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getAvailableCopies() {
+        return availableCopies;
+    }
+
+    public void setAvailableCopies(int availableCopies) {
+        this.availableCopies = availableCopies;
+    }
 
     public int getAuthorId() {
         return authorId;

@@ -23,5 +23,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query(value="Select * from book where LOWER(isbn_number) LIKE LOWER(:isbn_number)", nativeQuery = true)// NativeQuery -> SAF SQL - JPA + SQL = JPQL
     List<Book> searchSql(@Param("isbn_number") String isbnNumber); // Derived query değil
 
+    // isbne göre arama
+    boolean existsByIsbnNumber(String isbnNumber);
 
 }

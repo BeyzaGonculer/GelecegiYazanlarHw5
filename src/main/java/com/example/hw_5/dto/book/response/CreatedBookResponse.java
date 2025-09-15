@@ -3,26 +3,57 @@ package com.example.hw_5.dto.book.response;
 public class CreatedBookResponse {
 
     private int bookId;
-    private String authorName;
-    private String categoryName;
-    private int pageCount;
-    private String publisherName;
-    private String isbnNumber;
     private String name;
+    private int pageCount;
+    private String isbnNumber;
+    private String status;
+    private int totalCopies;
+    private int availableCopies;
 
-
-    public CreatedBookResponse(){
-
-    }
-    public CreatedBookResponse(int bookId, String authorName, String categoryName, int pageCount, String publisherName, String isbnNumber, String name) {
+    public CreatedBookResponse(int bookId, String publisherName, String categoryName, String authorName, int availableCopies, int totalCopies, String status, String isbnNumber, int pageCount, String name) {
         this.bookId = bookId;
-        this.authorName = authorName;
-        this.categoryName = categoryName;
-        this.pageCount = pageCount;
         this.publisherName = publisherName;
+        this.categoryName = categoryName;
+        this.authorName = authorName;
+        this.availableCopies = availableCopies;
+        this.totalCopies = totalCopies;
+        this.status = status;
         this.isbnNumber = isbnNumber;
+        this.pageCount = pageCount;
         this.name = name;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getTotalCopies() {
+        return totalCopies;
+    }
+
+    public void setTotalCopies(int totalCopies) {
+        this.totalCopies = totalCopies;
+    }
+
+    public int getAvailableCopies() {
+        return availableCopies;
+    }
+
+    public void setAvailableCopies(int availableCopies) {
+        this.availableCopies = availableCopies;
+    }
+
+    private String authorName;
+    private String categoryName;
+    private String publisherName;
+
+
+
+
 
     public int getBookId() {
         return bookId;
