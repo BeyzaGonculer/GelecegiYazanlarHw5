@@ -1,13 +1,16 @@
 package com.example.hw_5.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
 
 @Entity()
-@Table(name="personel")
+@Table(name="member")
 public class Member {
 
     @Id
@@ -30,8 +33,9 @@ public class Member {
     @Column(name="membership_level")
     private String membershipLevel;
 
-    @Column(name="is_banned")
-    private boolean isBanned;
+    @Column(name="status")
+    @JsonProperty(defaultValue = "ACTIVE")
+    private String status;
 
     @Column(name="is_paid")
     private boolean isPaid;
@@ -62,14 +66,13 @@ public class Member {
         this.membershipLevel = membershipLevel;
     }
 
-    public boolean isBanned() {
-        return isBanned;
+    public String getStatus() {
+        return status;
     }
 
-    public void setBanned(boolean banned) {
-        isBanned = banned;
+    public void setStatus(String status) {
+        this.status = status;
     }
-
     public boolean isPaid() {
         return isPaid;
     }
