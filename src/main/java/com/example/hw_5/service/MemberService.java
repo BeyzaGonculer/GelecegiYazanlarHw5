@@ -77,5 +77,14 @@ public class MemberService {
     }
 
 
+    public List<GetMemberResponse>  getIsNotPaid(boolean isPaid){
+        List<Member> allMember = new ArrayList<>();
+        allMember = memberRepository.findByIsPaid(isPaid);
+        List<GetMemberResponse> returnList = new ArrayList<>();
+        for (Member member : allMember){
+            returnList.add(memberMapper.memberToGetMemberResponse(member));
+        }
+        return returnList;
+    }
 
 }

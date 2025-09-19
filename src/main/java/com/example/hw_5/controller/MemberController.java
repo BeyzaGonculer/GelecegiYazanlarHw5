@@ -50,4 +50,10 @@ public class MemberController {
         return memberService.updateStatus(id, value);
     }
 
+    @GetMapping("/fines")
+    public List<GetMemberResponse> getIsNotPaid(@RequestParam boolean isPaid) {
+        return memberService.getIsNotPaid(isPaid);
+    }
+
+
 }

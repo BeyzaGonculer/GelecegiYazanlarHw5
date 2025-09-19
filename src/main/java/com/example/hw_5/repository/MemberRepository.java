@@ -12,4 +12,5 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     List<Member> findByStatus(String status);
     List<Member> findByEmail(String email);
     List<Member> findByStatusAndEmail(String status, String email);
+    List<Member> findByIsPaid(boolean isPaid);
 }

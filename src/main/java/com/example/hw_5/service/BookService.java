@@ -1,5 +1,6 @@
 package com.example.hw_5.service;
 
+import com.example.hw_5.core.exception.type.BookBusinessException;
 import com.example.hw_5.dto.book.request.CreateBookRequest;
 import com.example.hw_5.dto.book.request.SearchBookRequest;
 import com.example.hw_5.dto.book.request.UpdateBookRequest;
@@ -7,16 +8,13 @@ import com.example.hw_5.dto.book.response.*;
 import com.example.hw_5.entity.*;
 import com.example.hw_5.mapper.BookMapper;
 import com.example.hw_5.repository.BookRepository;
-import com.example.hw_5.repository.CategoryRepository;
 import com.example.hw_5.rules.BookBusinessRules;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import org.webjars.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Validated
@@ -68,7 +66,7 @@ public class BookService {
         return responseBook;
     }
 
-    public UpdateBookResponse updateBook(UpdateBookRequest request){
+    public UpdateBookResponse updateTotalCopies(UpdateBookRequest request){
         Book book = bookRepository.findById(request.getBookId())
                 .orElseThrow(() -> new RuntimeException("Kitap bulunamadı"));
 
@@ -142,7 +140,7 @@ public class BookService {
 
 
         Category category = categoryService
-                .findCategoryById(createBookRequest.getCategoryId()).orElseThrow(()-> new NotFoundException("Bu id ile bir kategori bulunamadı"));
+                .findCategoryById(createBookRequest.getCategoryId()).orElseThrow(GetBookParamsResponse("Bu id ile bir kategori bulunamadı"));
 
         book.setCategory(category);
    */
@@ -175,4 +173,34 @@ public class BookService {
         return responseList;
     }
 
+    public List<GetBookParamsResponse> getBooksByParams(String isbnNumber, String name, int authorId, String status){
+        List<Book> bookList = new ArrayList<>();
+
+        bookList = bookRepository.searchCustomSql(isbnNumber,name,authorId,status);
+
+        List<GetBookParamsResponse> responseList = new ArrayList<>();
+        BookMapper bookMapper = BookMapper.INSTANCE;
+
+        for (Book book: bookList) {
+           responseList.add(bookMapper.bookToGetBookParamsResponse(book));
+        }
+
+        return responseList;
+    }
+
+    public GetBookParamsResponse updateTotalCopies(int bookId, int delta)
+    {
+        Book book = bookRepository.findById(bookId).stream().findFirst().orElseThrow(()-> new BookBusinessException("Kitap bulunamadı !"));
+
+        if(book.getTotalCopies() + delta < 0)
+        {
+            throw new BookBusinessException("Total copies negatif olamaz !");
+        }
+
+        book.setTotalCopies( book.getTotalCopies() + delta);
+        bookRepository.save(book);
+
+        BookMapper bookMapper = BookMapper.INSTANCE;
+        return bookMapper.bookToGetBookParamsResponse(book);
+    }
 }

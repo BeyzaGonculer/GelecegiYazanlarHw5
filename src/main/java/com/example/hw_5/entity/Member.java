@@ -48,7 +48,17 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Reservation> reservations;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "member")
+    private List<Fine> fine;
 
+    public List<Fine> getFine() {
+        return fine;
+    }
+
+    public void setFine(List<Fine> fine) {
+        this.fine = fine;
+    }
 
     public List<Reservation> getReservations() {
         return reservations;

@@ -10,8 +10,6 @@ public class GetAllBookResponse {
     private String isbnNumber;
     private String name;
 
-
-
     public GetAllBookResponse(int bookId, String authorName, String categoryName, int pageCount, String publisherName, String isbnNumber, String name) {
         this.bookId = bookId;
         this.authorName = authorName;

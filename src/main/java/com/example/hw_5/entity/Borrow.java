@@ -46,19 +46,6 @@ public class Borrow {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "borrow")
-    private Fine fine;
-
-
-
-    public Fine getFine() {
-        return fine;
-    }
-
-    public void setFine(Fine fine) {
-        this.fine = fine;
-    }
 
     public int getBorrowId() {
         return borrowId;

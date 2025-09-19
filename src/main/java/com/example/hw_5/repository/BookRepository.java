@@ -26,4 +26,20 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     // isbne göre arama
     boolean existsByIsbnNumber(String isbnNumber);
 
+
+    @Query(value = """
+    SELECT * 
+    FROM book b 
+    WHERE b.isbn_number = :isbnNumber
+      AND b.name = :name
+      AND b.author_id = :authorId
+      AND b.status = :status
+""", nativeQuery = true)
+    List<Book> searchCustomSql(
+            @Param("isbnNumber") String isbnNumber,
+            @Param("name") String name,
+            @Param("authorId") int authorId,
+            @Param("status") String status
+    );
+
 }

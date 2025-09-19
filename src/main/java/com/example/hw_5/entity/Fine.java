@@ -16,12 +16,20 @@ public class Fine {
     @Column(name="fine_amount")
     private double fineAmount;
 
-    @OneToOne
-    @JoinColumn(name = "borrow_id", referencedColumnName = "borrow_id", nullable = false)
-    private Borrow borrow;
+    @ManyToOne()
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member member;
 
     public int getFineId() {
         return fineId;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public void setFineId(int fineId) {
@@ -44,11 +52,4 @@ public class Fine {
         this.fineAmount = fineAmount;
     }
 
-    public Borrow getBorrow() {
-        return borrow;
-    }
-
-    public void setBorrow(Borrow borrow) {
-        this.borrow = borrow;
-    }
 }
