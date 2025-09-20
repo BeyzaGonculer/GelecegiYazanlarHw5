@@ -1,6 +1,6 @@
 package com.example.hw_5.rules;
 
-import com.example.hw_5.core.exception.type.MemberBusinessException;
+import com.example.hw_5.core.exception.MemberBusinessException;
 import com.example.hw_5.repository.MemberRepository;
 import org.springframework.stereotype.Component;
 

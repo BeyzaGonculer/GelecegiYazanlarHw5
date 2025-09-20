@@ -1,4 +1,4 @@
-package com.example.hw_5.core.exception.type;
+package com.example.hw_5.core.exception;
 
 public class MemberBusinessException extends RuntimeException{
     public MemberBusinessException(String message) {

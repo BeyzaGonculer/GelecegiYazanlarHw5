@@ -1,6 +1,6 @@
 package com.example.hw_5.rules;
 
-import com.example.hw_5.core.exception.type.BookBusinessException;
+import com.example.hw_5.core.exception.BookBusinessException;
 import com.example.hw_5.repository.BookRepository;
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,6 @@
 package com.example.hw_5.service;
 
-import com.example.hw_5.core.exception.type.BookBusinessException;
+import com.example.hw_5.core.exception.BookBusinessException;
 import com.example.hw_5.dto.book.request.CreateBookRequest;
 import com.example.hw_5.dto.book.request.SearchBookRequest;
 import com.example.hw_5.dto.book.request.UpdateBookRequest;
