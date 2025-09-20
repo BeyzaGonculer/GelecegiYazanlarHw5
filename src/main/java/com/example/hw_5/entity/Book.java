@@ -27,6 +27,9 @@ public class Book {
     @Column(name="status")
     private String status;
 
+    @Column(name="price")
+    private int price;
+
     @Column(name="total_copies")
     private int totalCopies;
 
@@ -54,6 +57,13 @@ public class Book {
     @OneToMany(mappedBy = "book")
     private List<Reservation> reservation;
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 
     public List<Reservation> getReservation() {
         return reservation;

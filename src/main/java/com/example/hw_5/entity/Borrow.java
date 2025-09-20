@@ -30,14 +30,6 @@ public class Borrow {
     @JoinColumn(name = "book_id", referencedColumnName = "book_id", nullable = false)
     private Book book;
 
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
     @ManyToOne
     @JoinColumn(name = "personel_id", nullable = false)
     private Personel personel;
@@ -46,6 +38,14 @@ public class Borrow {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
 
     public int getBorrowId() {
         return borrowId;
