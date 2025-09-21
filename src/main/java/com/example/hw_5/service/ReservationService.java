@@ -5,7 +5,6 @@ import com.example.hw_5.dto.reservation.response.ReservationResponse;
 import com.example.hw_5.entity.Book;
 import com.example.hw_5.entity.Member;
 import com.example.hw_5.entity.Reservation;
-import com.example.hw_5.mapper.BookMapper;
 import com.example.hw_5.mapper.ReservationMapper;
 import com.example.hw_5.repository.ReservationRepository;
 import com.example.hw_5.rules.ReservationBusinessRules;
@@ -13,9 +12,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Validated
@@ -77,4 +74,26 @@ public class ReservationService {
         }
         return unActiveReservations;
     }
+
+    public ReservationResponse setExpireDate(int bookId) {
+        List<Reservation> allReservation = reservationRepository.findAll();
+
+        Optional<Reservation> optionalReservation = allReservation.stream()
+                .filter(Reservation::isStatus)
+                .sorted(Comparator.comparing(Reservation::getCreationDate))
+                .findFirst();
+
+        Reservation reservation = optionalReservation
+                .orElseThrow(() -> new RuntimeException("Rezervasyon bulunamadı"));
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.HOUR, 24);
+        reservation.setExpireDate(calendar.getTime());
+
+        reservationRepository.save(reservation);
+
+        return reservationMapper.reservationToCreateReservationRequest(reservation);
+    }
+
 }

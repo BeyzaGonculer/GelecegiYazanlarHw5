@@ -39,4 +39,9 @@ public class ReservationController {
     {
         return reservationService.checkReservationStatus();
     }
+
+    @PostMapping("/fullfill-next")
+    public ReservationResponse setExpireDate(@RequestParam int bookId){
+        return reservationService.setExpireDate(bookId);
+    }
 }
