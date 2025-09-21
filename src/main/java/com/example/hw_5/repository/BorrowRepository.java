@@ -11,5 +11,11 @@ public interface BorrowRepository extends JpaRepository<Borrow,Integer> {
 
     boolean existsByMemberAndBookAndDeliveryDateIsNull(Member member, Book book);
 
+    // deliveryDate null olan kayıtları getirir (OPEN)
+    List<Borrow> findByMemberMemberIdAndDeliveryDateIsNull(int memberId);
+
+    // deliveryDate dolu olan kayıtları getirir (CLOSED)
+    List<Borrow> findByMemberMemberIdAndDeliveryDateIsNotNull(int memberId);
+
 
 }

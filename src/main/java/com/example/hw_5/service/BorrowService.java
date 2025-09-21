@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Validated
@@ -110,6 +111,20 @@ public class BorrowService {
         borrowRepository.delete(borrow);
 
         return borrowMapper.borrowToReturnBorrowResponse(savedBorrow);
+    }
+
+    public List<BorrowedResponse> getBorrowsByMemberAndStatus(int memberId, String status) {
+        List<Borrow> borrows;
+        if ("OPEN".equalsIgnoreCase(status)) {
+            borrows = borrowRepository.findByMemberMemberIdAndDeliveryDateIsNull(memberId);
+        } else if ("CLOSED".equalsIgnoreCase(status)) {
+            borrows = borrowRepository.findByMemberMemberIdAndDeliveryDateIsNotNull(memberId);
+        } else {
+            throw new IllegalArgumentException("Unknown status: " + status);
+        }
+        return borrows.stream()
+                .map(borrowMapper::borrowToBorrowResponse)
+                .toList();
     }
 
 }

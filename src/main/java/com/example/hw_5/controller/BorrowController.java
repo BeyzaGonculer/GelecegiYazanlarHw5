@@ -6,10 +6,9 @@ import com.example.hw_5.dto.borrow.response.BorrowedResponse;
 import com.example.hw_5.dto.borrow.response.ReturnBorrowResponse;
 import com.example.hw_5.service.BorrowService;
 import com.example.hw_5.service.FineService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/borrows")
@@ -33,6 +32,18 @@ public class BorrowController {
         return borrowService.returnBorrow(request);
     }
 
+
+    @GetMapping("/members/{memberId}")
+    public List<BorrowedResponse> getOpenBorrowsByMember(
+            @PathVariable int memberId,
+            @RequestParam(defaultValue = "OPEN") String status) {
+
+        if (!"OPEN".equalsIgnoreCase(status)) {
+            throw new IllegalArgumentException("Only OPEN status is supported in this endpoint");
+        }
+
+        return borrowService.getBorrowsByMemberAndStatus(memberId, status);
+    }
 
 
 }
