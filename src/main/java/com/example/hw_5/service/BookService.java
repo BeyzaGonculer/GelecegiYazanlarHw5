@@ -7,6 +7,7 @@ import com.example.hw_5.dto.book.request.UpdateBookRequest;
 import com.example.hw_5.dto.book.response.*;
 import com.example.hw_5.entity.*;
 import com.example.hw_5.mapper.BookMapper;
+import com.example.hw_5.repository.BookCopyRepository;
 import com.example.hw_5.repository.BookRepository;
 import com.example.hw_5.rules.BookBusinessRules;
 import jakarta.validation.Valid;
@@ -30,13 +31,16 @@ public class BookService {
 
     private final BookBusinessRules bookBusinessRules;
 
+    private final BookCopyRepository bookCopyRepository;
 
-    public BookService(BookRepository bookRepository, CategoryService categoryService, AuthorService authorService, PublisherService publisherService, BookBusinessRules bookBusinessRules) {
+
+    public BookService(BookRepository bookRepository, CategoryService categoryService, AuthorService authorService, PublisherService publisherService, BookBusinessRules bookBusinessRules, BookCopyRepository bookCopyRepository) {
         this.bookRepository = bookRepository;
         this.categoryService = categoryService;
         this.authorService = authorService;
         this.publisherService = publisherService;
         this.bookBusinessRules=bookBusinessRules;
+        this.bookCopyRepository = bookCopyRepository;
     }
 
     public List<GetAllBookResponse> getAll(){
@@ -146,6 +150,19 @@ public class BookService {
    */
         book = bookRepository.save(book);
 
+        List<BookCopy> copies = new ArrayList<>();
+        for (int i = 0; i < createBookRequest.getTotalCopies(); i++) {
+            BookCopy copy = new BookCopy();
+            copy.setBook(book);
+            copy.setAvailable(true); // ilk eklenince müsaittir
+            copies.add(copy);
+        }
+
+// Hepsini kaydet
+        bookCopyRepository.saveAll(copies);
+
+// book içine kopyaları set et
+        book.setCopies(copies);
         return bookMapper.bookToCreateBookResponse(book);
     }
 

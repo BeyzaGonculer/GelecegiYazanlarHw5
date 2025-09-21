@@ -24,8 +24,6 @@ public class Book {
     @Column(name="isbn_number")
     private String isbnNumber;
 
-    @Column(name="status")
-    private String status;
 
     @Column(name="price")
     private int price;
@@ -49,13 +47,22 @@ public class Book {
     private Category category;
 
     // Book sadece Borrow tarafından sahiplenilir
-    @JsonIgnore
-    @OneToOne(mappedBy = "book")
-    private Borrow borrow;
 
     @JsonIgnore
     @OneToMany(mappedBy = "book")
     private List<Reservation> reservation;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "book")
+    private List<BookCopy> copies; // Kitabın tüm kopyaları
+
+    public List<BookCopy> getCopies() {
+        return copies;
+    }
+
+    public void setCopies(List<BookCopy> copies) {
+        this.copies = copies;
+    }
 
     public int getPrice() {
         return price;
@@ -73,13 +80,6 @@ public class Book {
         this.reservation = reservation;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public int getTotalCopies() {
         return totalCopies;
@@ -97,13 +97,7 @@ public class Book {
         this.availableCopies = availableCopies;
     }
 
-    public Borrow getBorrow() {
-        return borrow;
-    }
 
-    public void setBorrow(Borrow borrow) {
-        this.borrow = borrow;
-    }
 
     public int getBookId() {
         return bookId;

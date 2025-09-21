@@ -4,9 +4,12 @@ import com.example.hw_5.dto.book.request.CreateBookRequest;
 import com.example.hw_5.dto.book.response.CreatedBookResponse;
 import com.example.hw_5.dto.book.response.GetBookParamsResponse;
 import com.example.hw_5.entity.Book;
+import com.example.hw_5.entity.BookCopy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface BookMapper {
@@ -21,6 +24,7 @@ public interface BookMapper {
     @Mapping(target="categoryName", source="category.categoryName")
     @Mapping(target="publisherName", source="publisher.name")
     @Mapping(target="authorName", source="author.firstName")
+    @Mapping(target="copyIds", source="copies")
     CreatedBookResponse bookToCreateBookResponse(Book book);
 
     @Mapping(target="categoryId", source="category.categoryId")
@@ -28,4 +32,11 @@ public interface BookMapper {
     @Mapping(target="authorId", source="author.authorId")
     GetBookParamsResponse bookToGetBookParamsResponse(Book book);
 
+
+    default List<Integer> mapBookCopiesToIds(List<BookCopy> copies) {
+        if (copies == null) return null;
+        return copies.stream()
+                .map(BookCopy::getCopyId)
+                .toList();
+    }
 }

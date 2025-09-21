@@ -1,34 +1,36 @@
 package com.example.hw_5.dto.book.response;
 
+import java.util.List;
+
 public class CreatedBookResponse {
 
     private int bookId;
     private String name;
     private int pageCount;
     private String isbnNumber;
-    private String status;
     private int totalCopies;
     private int availableCopies;
+    private List<Integer> copyIds;
 
-    public CreatedBookResponse(int bookId, String publisherName, String categoryName, String authorName, int availableCopies, int totalCopies, String status, String isbnNumber, int pageCount, String name) {
+    public CreatedBookResponse(int bookId, String publisherName, String categoryName, String authorName, int availableCopies, int totalCopies, String status, String isbnNumber, int pageCount, String name, List<Integer> copyIds) {
         this.bookId = bookId;
         this.publisherName = publisherName;
         this.categoryName = categoryName;
         this.authorName = authorName;
         this.availableCopies = availableCopies;
         this.totalCopies = totalCopies;
-        this.status = status;
         this.isbnNumber = isbnNumber;
         this.pageCount = pageCount;
         this.name = name;
+        this.copyIds = copyIds;
     }
 
-    public String getStatus() {
-        return status;
+    public List<Integer> getCopyIds() {
+        return copyIds;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCopyIds(List<Integer> copyIds) {
+        this.copyIds = copyIds;
     }
 
     public int getTotalCopies() {

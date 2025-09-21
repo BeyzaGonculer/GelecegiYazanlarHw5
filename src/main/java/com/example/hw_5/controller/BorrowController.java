@@ -18,11 +18,11 @@ public class BorrowController {
         this.borrowService = borrowService;
     }
 
-   /* @PostMapping
+   @PostMapping
     public BorrowedResponse createBorrow(BorrowRequest borrowRequest){
 
         return borrowService.createBorrow(borrowRequest);
 
-    }*/
+    }
 
 }

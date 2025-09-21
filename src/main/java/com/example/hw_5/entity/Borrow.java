@@ -26,7 +26,7 @@ public class Borrow {
     private Date deliveryDate;
 
     // Borrow tarafı sahipli (owning side)
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "book_id", referencedColumnName = "book_id", nullable = false)
     private Book book;
 
@@ -39,6 +39,17 @@ public class Borrow {
     private Member member;
 
 
+    @ManyToOne
+    @JoinColumn(name = "copy_id", nullable = false)
+    private BookCopy bookCopy; // ödünç alınan kopya
+
+    public BookCopy getBookCopy() {
+        return bookCopy;
+    }
+
+    public void setBookCopy(BookCopy bookCopy) {
+        this.bookCopy = bookCopy;
+    }
 
     public Book getBook() {
         return book;

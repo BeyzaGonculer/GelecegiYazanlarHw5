@@ -1,19 +1,17 @@
 package com.example.hw_5.dto.borrow.request;
 
-import java.util.Date;
-
 public class BorrowRequest {
 
-    private int bookId;
+    private String isbnNumber;
     private int memberId;
     private int personelId;
 
-    public int getBookId() {
-        return bookId;
+    public String getIsbnNumber() {
+        return isbnNumber;
     }
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+    public void setIsbnNumber(String isbnNumber) {
+        this.isbnNumber = isbnNumber;
     }
 
     public int getMemberId() {

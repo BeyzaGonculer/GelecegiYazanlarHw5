@@ -4,9 +4,7 @@ import com.example.hw_5.dto.borrow.request.BorrowRequest;
 import com.example.hw_5.dto.borrow.response.BorrowedResponse;
 import com.example.hw_5.dto.fine.request.CreateFineRequest;
 import com.example.hw_5.dto.fine.response.CreateFineResponse;
-import com.example.hw_5.entity.Borrow;
-import com.example.hw_5.entity.Fine;
-import com.example.hw_5.entity.Member;
+import com.example.hw_5.entity.*;
 import com.example.hw_5.mapper.BorrowMapper;
 import com.example.hw_5.mapper.FineMapper;
 import com.example.hw_5.repository.BorrowRepository;
@@ -39,29 +37,46 @@ public class BorrowService {
 
         Borrow borrow = borrowMapper.borrowRequestToBorrow(request);
         Member member = borrowBusinessRules.findMemberById(request.getMemberId());
+        Book book = borrowBusinessRules.findBookByIsbn(request.getIsbnNumber());
+        Personel personel = borrowBusinessRules.findPersonelById(request.getPersonelId());
+        //book = borrow.getBook();
+        BookCopy copy = borrowBusinessRules.findAvailableCopy(book);
+        borrow.getBook().getIsbnNumber();
+
+       //borrowBusinessRules.checkAvailableBook(book);
+
+       borrowBusinessRules.checkMemberHasNoUnpaidFines(member);
+       borrowBusinessRules.checkMemberNotBorrowSameBook(member, book);
+
+       borrow.setBookCopy(copy);
+       borrow.setBook(book);
+       borrow.setMember(member);
+       borrow.setPersonel(personel);
+       book.setBookId(book.getBookId());
+
+       copy.setAvailable(false);
+
+       book.setAvailableCopies(book.getAvailableCopies() - 1);
 
        Date startDate = new Date();
        Calendar calendar = Calendar.getInstance();
        calendar.setTime(startDate);
-
        borrow.setStartDate(startDate);
 
         if(member.getMembershipLevel().toUpperCase().equals("STANDARD")){
             calendar.add(Calendar.DAY_OF_MONTH, 14);
-
-
             borrow.setDueDate(calendar.getTime());
         }
 
         else if(member.getMembershipLevel().toUpperCase().equals("GOLD")){
             calendar.add(Calendar.DAY_OF_MONTH, 21);
-
-
             borrow.setDueDate(calendar.getTime());
        }
 
 
 
-        return borrowMapper.borrowToBorrowResponse(borrow);
+
+        Borrow savedBorrow = borrowRepository.save(borrow);
+        return borrowMapper.borrowToBorrowResponse(savedBorrow);
    }
 }

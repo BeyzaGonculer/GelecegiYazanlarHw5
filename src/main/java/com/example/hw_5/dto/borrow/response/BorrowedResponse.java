@@ -5,12 +5,20 @@ import java.util.Date;
 public class BorrowedResponse {
 
     private int borrowId;
-    private int bookId;
     private int memberId;
     private Date startDate;
     private Date dueDate;
     private int personelId;
     private Date returnDate;
+    private String isbnNumber;
+
+    public String getIsbnNumber() {
+        return isbnNumber;
+    }
+
+    public void setIsbnNumber(String isbnNumber) {
+        this.isbnNumber = isbnNumber;
+    }
 
     public int getBorrowId() {
         return borrowId;
@@ -20,13 +28,7 @@ public class BorrowedResponse {
         this.borrowId = borrowId;
     }
 
-    public int getBookId() {
-        return bookId;
-    }
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
-    }
 
     public int getMemberId() {
         return memberId;
