@@ -1,7 +1,9 @@
 package com.example.hw_5.mapper;
 
 import com.example.hw_5.dto.borrow.request.BorrowRequest;
+import com.example.hw_5.dto.borrow.request.ReturnBorrowRequest;
 import com.example.hw_5.dto.borrow.response.BorrowedResponse;
+import com.example.hw_5.dto.borrow.response.ReturnBorrowResponse;
 import com.example.hw_5.dto.fine.response.CreateFineResponse;
 import com.example.hw_5.entity.Borrow;
 import com.example.hw_5.entity.Fine;
@@ -24,6 +26,18 @@ public interface BorrowMapper {
     @Mapping(source = "book.isbnNumber", target = "isbnNumber")
     BorrowedResponse borrowToBorrowResponse(Borrow borrow);
 
+    @Mapping(source = "borrowId", target = "borrowId")
+    Borrow returnBorrowRequestToBorrow(ReturnBorrowRequest request);
 
-
+    @Mapping(source = "borrowId", target = "borrowId")
+    @Mapping(source = "member.memberId", target = "memberId")
+    @Mapping(source = "personel.personelId", target = "personelId")
+    @Mapping(source = "book.isbnNumber", target = "isbnNumber")
+    @Mapping(source = "book.availableCopies", target = "availableCopies")
+    @Mapping(source = "borrow.startDate", target = "startDate")
+    @Mapping(source = "borrow.dueDate", target = "dueDate")
+    @Mapping(source = "borrow.deliveryDate", target = "deliveryDate")
+    ReturnBorrowResponse borrowToReturnBorrowResponse(Borrow borrow);
 }
+
+
